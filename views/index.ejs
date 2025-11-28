@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="./handleDialog.js" defer></script>
+
+    <meta charset="UTF-8">
+    <title>Silver States</title>
+</head>
+<body>
+    <%- include("./partials/navbar") %>
+    <div class="page-ctn">
+        <% if (locals.user) { %>
+            <div class="actions-bar">
+                <div class="actions">
+                    <button class="new-post btn
+                        <%= locals?.user ? "logged" : "" %>
+                        <%= locals?.user?.membership || locals?.user?.isadmin ? "member" : "" %>" type="button"><img /></button>
+                </div>
+            </div>
+            <%- include("./partials/new-message") %>
+        <% }  %>
+        <div class="page index <%= !locals?.user ? "foreign" : "" %>">
+            <div class="posts <%= locals?.user ? "logged" : "" %>
+                <%= locals?.user?.membership || locals?.user?.isadmin ? "member" : "" %>">
+                <% posts.forEach((post) => { %>
+                    <div class="post">
+                        <p><%= post.message %></p>
+                        <% if (locals.user?.membership || locals.user?.isadmin) { %>
+                            <span class="post-meta">
+                                <%= post.username %>
+                                &#x2022
+                                <%= new Date(post.timestamp).toLocaleTimeString(
+                                    navigator.language,
+                                    {
+                                        weekday: "short",
+                                        month: "short",
+                                        day: "numeric",
+                                        year: "numeric",
+                                        hour: "numeric",
+                                        minute: "numeric",
+                                    }
+                                ) %>
+                            </span>
+                        <% } %>
+                        <% if (locals.user?.isadmin) { %>
+                            <form class="delete"action="/delete/<%= post.id %>" method="POST">
+                              <button class="delete btn">Delete</button>
+                            </form>
+                        <% } %>
+                    </div>
+                <% }); %>
+            </div>
+            <% if (!locals?.user) { %>
+            <div class="promo">
+                <h2>Share your thoughts. <br>Be your true self.</h2>
+                <a class="btn lnk sp call" href="sign-up">Sign Up Now</a>
+            </div>
+            <% }%>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/styles.css">
+
+    <meta charset="UTF-8">
+    <title>Login - Silver States</title>
+</head>
+<body>
+    <%- include("./partials/navbar") %>
+    <div class="page upgrade">
+        <form class="upgrade" action="/upgrade" method="POST">
+            <h2>Connect more than ever before.</h2>
+            <label for="passcode">Enter the secret passcode and join hundreds of others in an exclusive community</label>
+            <input id="passcode" name="passcode" type="password" placeholder="passcode" required />
+            <button class="submit btn upgrade" type="submit">Upgrade</button>
+        </form>
+    </div>
+</body>
+</html>
